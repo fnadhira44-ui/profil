@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Student Profile | High-End Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --accent: #ff007a;
+            --dark: #050505;
+            --card-bg: rgba(20, 20, 20, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 15px;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Mesh */
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(at 0% 0%, rgba(58, 123, 213, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 0, 122, 0.1) 0px, transparent 50%);
+        }
+
+        /* Main Container */
+        .master-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+            padding: 30px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Left Side: Identity */
+        .sidebar {
+            background: rgba(255,255,255,0.03);
+            border-radius: 30px;
+            padding: 40px 25px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .img-frame {
+            position: relative;
+            width: 160px; height: 160px; margin: 0 auto 25px;
+        }
+
+        .img-frame img {
+            width: 100%; height: 100%; border-radius: 35%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            padding: 5px;
+            background: var(--dark);
+        }
+
+        .online-status {
+            position: absolute; bottom: 10px; right: 10px;
+            padding: 5px 12px; background: #00ff88; color: black;
+            font-size: 10px; font-weight: 800; border-radius: 20px;
+            box-shadow: 0 0 15px #00ff88;
+        }
+
+        .sidebar h2 { font-size: 1.5rem; letter-spacing: -1px; margin-bottom: 5px; }
+        .sidebar p { color: var(--primary); font-size: 0.8rem; font-weight: 700; opacity: 0.8; margin-bottom: 25px; }
+
+        .contact-list { text-align: left; font-size: 0.85rem; margin-top: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; opacity: 0.7; }
+        .contact-item i { color: var(--primary); width: 20px; }
+
+        /* Right Side: Detailed Info */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .grid-box {
+            background: rgba(255,255,255,0.02);
+            border-radius: 25px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            transition: 0.4s;
+        }
+
+        .grid-box:hover { background: rgba(255,255,255,0.05); transform: scale(1.02); }
+
+        .box-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; color: var(--primary); font-weight: 800; font-size: 0.9rem; }
+
+        /* Education/Tamatan List */
+        .timeline { position: relative; padding-left: 20px; border-left: 1px solid var(--border); }
+        .time-item { position: relative; margin-bottom: 20px; }
+        .time-item::before {
+            content: ''; position: absolute; left: -26px; top: 5px;
+            width: 10px; height: 10px; background: var(--accent); border-radius: 50%;
+        }
+        .time-item h4 { font-size: 0.9rem; margin-bottom: 2px; }
+        .time-item span { font-size: 0.75rem; color: var(--primary); }
+        .time-item p { font-size: 0.8rem; opacity: 0.6; margin-top: 3px; }
+
+        /* Skills Progress */
+        .skill-bar { margin-bottom: 12px; }
+        .skill-info { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 5px; }
+        .bar-bg { height: 6px; background: #222; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0; transition: 2s; }
+
+        /* Interaction Buttons */
+        .actions { grid-column: span 2; display: flex; gap: 15px; margin-top: 10px; }
+        .btn {
+            flex: 1; padding: 15px; border-radius: 15px; border: none; cursor: pointer;
+            font-weight: 800; font-size: 0.8rem; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-primary { background: white; color: black; }
+        .btn-secondary { background: var(--accent); color: white; }
+        .btn:hover { filter: brightness(0.8); transform: translateY(-3px); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .master-card { grid-template-columns: 1fr; }
+            .main-content { grid-template-columns: 1fr; }
+            .actions { grid-template-columns: 1fr; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mesh-bg"></div>
+
+    <div class="master-card">
+        <aside class="sidebar">
+            <div class="img-frame">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dexter" alt="User">
+                <span class="online-status">PUBLIC ACCESS</span>
+            </div>
+            <h2>NAMA ANDA</h2>
+            <p>MAHASISWA DIGITAL CREATIVE</p>
+            
+            <div class="contact-list">
+                <div class="contact-item"><i class="fas fa-envelope"></i> admin@yourdomain.com</div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i> Bandung, Indonesia</div>
+                <div class="contact-item"><i class="fas fa-phone"></i> +62 812 3456 789</div>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: center;">
+                <a href="#" style="color:white; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color:white; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
+                <a href="#" style="color:white; font-size: 1.2rem;"><i class="fab fa-github"></i></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="grid-box">
+                <div class="box-header"><i class="fas fa-graduation-cap"></i> RIWAYAT PENDIDIKAN</div>
+                <div class="timeline">
+                    <div class="time-item">
+                        <h4>Universitas Indonesia</h4>
+                        <span>2021 - Sekarang (S1 Teknik)</span>
+                        <p>Fokus pada pengembangan sistem cerdas.</p>
+                    </div>
+                    <div class="time-item">
+                        <h4>SMAN 1 Jakarta</h4>
+                        <span>2018 - 2021 (MIPA)</span>
+                        <p>Lulusan terbaik bidang olimpiade Sains.</p>
+                    </div>
+                    <div class="time-item">
+                        <h4>SMPN 1 Jakarta</h4>
+                        <span>2015 - 2018</span>
+                        <p>Ketua OSIS & Peraih Medali Seni.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-box">
+                <div class="box-header"><i class="fas fa-bolt"></i> KEAHLIAN & SKILL</div>
+                <div class="skill-bar">
+                    <div class="skill-info"><span>Web Development</span><span>95%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-progress="95%"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-info"><span>Graphic Design</span><span>80%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-progress="80%"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-info"><span>Video Editing</span><span>70%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-progress="70%"></div></div>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-info"><span>Public Speaking</span><span>88%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-progress="88%"></div></div>
+                </div>
+            </div>
+
+            <div class="grid-box">
+                <div class="box-header"><i class="fas fa-users"></i> PENGALAMAN KERJA / ORG</div>
+                <ul style="list-style: none; font-size: 0.85rem; opacity: 0.8;">
+                    <li style="margin-bottom: 10px;">⚡ <b>Project Manager</b> - Creative Studio (Intern)</li>
+                    <li style="margin-bottom: 10px;">⚡ <b>Head of Design</b> - Student Association</li>
+                    <li style="margin-bottom: 10px;">⚡ <b>Freelance</b> - UI/UX Designer</li>
+                </ul>
+            </div>
+
+            <div class="grid-box">
+                <div class="box-header"><i class="fas fa-trophy"></i> PENGHARGAAN</div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <span style="background: rgba(0,210,255,0.1); padding: 5px 10px; border-radius: 8px; font-size: 11px;">🏆 Juara 1 Web Design</span>
+                    <span style="background: rgba(255,0,122,0.1); padding: 5px 10px; border-radius: 8px; font-size: 11px;">🥇 Best Speaker 2023</span>
+                    <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; font-size: 11px;">🎖️ Finalis Hackathon</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="alert('Akses Semua Orang Disetujui!')">
+                    <i class="fas fa-unlock"></i> IZINKAN AKSES PUBLIK
+                </button>
+                <button class="btn btn-secondary" onclick="window.print()">
+                    <i class="fas fa-file-pdf"></i> CETAK PORTOFOLIO LENGKAP
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Animasi bar pengisian
+        window.onload = () => {
+            const fills = document.querySelectorAll('.bar-fill');
+            fills.forEach(fill => {
+                const target = fill.getAttribute('data-progress');
+                setTimeout(() => {
+                    fill.style.width = target;
+                }, 500);
+            });
+        };
+
+        // Pesan sambutan
+        console.log("Welcome to your Ultimate Student Portfolio. Access granted.");
+    </script>
+</body>
+</html>
